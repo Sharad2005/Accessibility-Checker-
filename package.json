@@ -1,0 +1,30 @@
+{
+  "name": "accessibility-checker",
+  "version": "1.0.0",
+  "description": "A tool that checks and scores digital accessibility for citizens with disabilities",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "accessibility",
+    "wcag",
+    "a11y",
+    "compliance",
+    "scanner"
+  ],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@axe-core/puppeteer": "^4.11.0",
+    "@google/generative-ai": "^0.24.1",
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "pdfkit": "^0.17.2",
+    "puppeteer": "^24.26.1"
+  }
+}

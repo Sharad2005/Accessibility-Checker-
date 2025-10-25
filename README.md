@@ -1,303 +1,220 @@
-# Accessibility Checker
+# Accessibility Checker 🌐
 
-A web-based tool that checks and scores digital accessibility for citizens with disabilities. Scan any website for WCAG 2.1 compliance, get a detailed accessibility score, and download comprehensive PDF reports.
+**AI-Powered Web Accessibility Scanner with Automated Code Fixes**
 
-## Features
+Scan any website for WCAG 2.1 compliance and get **instant AI-generated code fixes** powered by Google Gemini. Built for the "Track India" Hackathon to make digital services accessible to 200M+ Indians with disabilities.
 
-- **URL-Based Scanning**: Simply enter any website URL to analyze
-- **WCAG 2.1 Compliance**: Automated checks against Web Content Accessibility Guidelines
-- **Accessibility Scoring**: 0-100 score based on violations and severity
-- **Detailed Reports**: See exactly what issues were found and how to fix them
-- **PDF Export**: Download professional compliance reports
-- **Real-Time Analysis**: Powered by axe-core accessibility testing engine
+---
 
-## Tech Stack
+## 🚀 Quick Start
 
-- **Backend**: Node.js, Express
-- **Frontend**: HTML, CSS, JavaScript (Vanilla)
-- **Scanning Engine**: Puppeteer + axe-core
-- **Report Generation**: PDFKit
-- **Standards**: WCAG 2.1 Level A & AA
-
-## Prerequisites
-
-- Node.js (v14 or higher)
-- npm or yarn
-
-## Installation
-
-1. **Clone or download this repository**
-
-2. **Install dependencies**
 ```bash
+# 1. Install dependencies
 npm install
-```
 
-This will install:
-- express - Web server framework
-- cors - Cross-origin resource sharing
-- puppeteer - Headless Chrome browser
-- @axe-core/puppeteer - Accessibility testing
-- pdfkit - PDF generation
+# 2. Set up API key
+cp .env.example .env
+# Edit .env and add your Gemini API key from https://aistudio.google.com/app/apikey
 
-## Usage
-
-### Start the Server
-
-```bash
+# 3. Start the server
 npm start
+
+# 4. Open http://localhost:3000
 ```
 
-The server will start on `http://localhost:3000`
+---
 
-### Using the Application
+## ✨ Key Features
 
-1. **Open your browser** and navigate to `http://localhost:3000`
+### 🤖 AI-Powered Fix Suggestions
+- **Instant Code Fixes**: Google Gemini AI generates ready-to-use HTML/CSS fixes
+- **Before/After Comparison**: Side-by-side code view shows exactly what to change
+- **Copy to Clipboard**: One-click copying for immediate implementation
+- **Smart Explanations**: Understand why each fix matters for accessibility
 
-2. **Enter a URL** in the input field (e.g., `https://example.com`)
+### 📊 Comprehensive Analysis
+- **WCAG 2.1 Compliance**: Automated checks against Level A & AA standards
+- **Accessibility Scoring**: 0-100 score based on violation severity
+- **Detailed Breakdown**: Critical, Serious, Moderate, and Minor issue categorization
+- **PDF Reports**: Professional downloadable compliance reports
 
-3. **Click "Scan Website"** and wait for the analysis to complete
+### 🎯 Developer-Friendly
+- **Real-Time Analysis**: Powered by axe-core accessibility testing engine
+- **URL-Based Scanning**: Simply enter any website URL to analyze
+- **Smart Caching**: 1-hour cache for faster repeated suggestions
+- **Fallback Handling**: Manual guidance when AI is unavailable
 
-4. **View Results**:
-   - Overall accessibility score (0-100)
-   - Breakdown by severity (Critical, Serious, Moderate, Minor)
-   - WCAG compliance levels (A, AA, AAA)
-   - Detailed list of all violations
+---
 
-5. **Download PDF Report** for detailed documentation and sharing
+## 🏗️ Tech Stack
 
-## API Documentation
+| Component | Technology |
+|-----------|-----------|
+| Backend | Node.js, Express |
+| Frontend | HTML, CSS, JavaScript |
+| Scanning Engine | Puppeteer + axe-core |
+| **AI Engine** | **Google Gemini 2.5 Flash** |
+| Reports | PDFKit |
+| Standards | WCAG 2.1 Level A & AA |
 
-### POST `/api/scan`
+---
 
-Scan a URL for accessibility issues.
+## 💡 What Makes This Different?
 
-**Request:**
-```json
-{
-  "url": "https://example.com"
-}
+Unlike traditional accessibility checkers that only identify problems, our tool:
+
+✅ **Generates Real Code Fixes** - Not just descriptions, but actual working HTML/CSS
+✅ **Explains the Impact** - Understand how each issue affects users with disabilities
+✅ **Teaches Best Practices** - Learn correct implementations while fixing
+✅ **Saves Development Time** - Copy-paste ready code instead of researching solutions
+
+### Example AI Suggestion
+
+**Before (Violation):**
+```html
+<img src="logo.png">
 ```
 
-**Response:**
-```json
-{
-  "success": true,
-  "data": {
-    "scanId": "abc123",
-    "url": "https://example.com",
-    "timestamp": "2025-10-25T10:30:00Z",
-    "score": 75,
-    "violations": [...],
-    "passes": [...],
-    "incomplete": [...],
-    "issueCount": {
-      "critical": 2,
-      "serious": 5,
-      "moderate": 3,
-      "minor": 1
-    },
-    "wcagLevel": {
-      "A": { "passed": 15, "failed": 3 },
-      "AA": { "passed": 22, "failed": 5 },
-      "AAA": { "passed": 8, "failed": 12 }
-    }
-  }
-}
+**After (AI Fix):**
+```html
+<img src="logo.png" alt="Company logo with blue geometric design">
 ```
 
-### GET `/api/report/:scanId`
+**AI Explanation:**
+> "Added descriptive alt text that describes the visual content of the image. This helps screen reader users understand what the logo looks like, meeting WCAG 1.1.1 (Non-text Content) requirements."
 
-Download PDF report for a completed scan.
+---
 
-**Response:** PDF file download
-
-### GET `/api/health`
-
-Health check endpoint.
-
-**Response:**
-```json
-{
-  "success": true,
-  "message": "Accessibility Checker API is running",
-  "timestamp": "2025-10-25T10:30:00Z"
-}
-```
-
-## Project Structure
+## 📁 Project Structure
 
 ```
 accessibility-checker/
-├── package.json              # Dependencies and scripts
-├── server.js                 # Express API server
-├── .gitignore               # Git ignore rules
-├── README.md                # This file
-├── PLAN.md                  # Detailed implementation plan
-├── public/                  # Frontend files
-│   ├── index.html           # Main UI
-│   ├── style.css            # Styling
-│   └── script.js            # Frontend logic
-├── utils/                   # Backend modules
-│   ├── scanner.js           # Accessibility scanning
-│   └── reportGenerator.js   # PDF generation
-└── reports/                 # Temporary PDF storage
+├── server.js              # Express API server
+├── .env.example          # Environment variables template
+├── public/               # Frontend files
+│   ├── index.html        # Main UI
+│   ├── style.css         # Styling with AI purple theme
+│   └── script.js         # Frontend logic with AI integration
+└── utils/                # Backend modules
+    ├── scanner.js        # Accessibility scanning
+    ├── geminiAI.js       # Google Gemini AI integration
+    └── reportGenerator.js # PDF report generation
 ```
 
-## How It Works
+---
+
+## 🔧 API Endpoints
+
+### `POST /api/scan`
+Scan a URL for accessibility issues and get detailed analysis.
+
+### `POST /api/suggest-fix`
+Generate AI-powered fix suggestion for a specific violation.
+
+### `GET /api/report/:scanId`
+Download PDF compliance report for a completed scan.
+
+### `GET /api/health`
+Health check endpoint.
+
+---
+
+## 🎨 How It Works
 
 ### Scanning Process
+1. User enters website URL
+2. Puppeteer launches headless Chrome browser
+3. axe-core runs automated WCAG tests
+4. System calculates accessibility score
+5. Results displayed with violation breakdown
 
-1. **User Input**: User provides a website URL through the frontend
-2. **Backend Processing**: Express server receives the request
-3. **Browser Launch**: Puppeteer launches a headless Chrome browser
-4. **Page Load**: Browser navigates to the target URL
-5. **Accessibility Analysis**: axe-core runs automated WCAG tests
-6. **Score Calculation**: Violations are weighted by severity to calculate score
-7. **Results Return**: Formatted results sent back to frontend
-8. **Display**: Frontend shows score, violations, and WCAG breakdown
+### AI Fix Suggestion Process
+1. User clicks "Get AI Suggestion" on a violation
+2. Google Gemini AI analyzes HTML and context
+3. AI generates fixed code that resolves the issue
+4. Before/after comparison displayed with explanation
+5. User copies fixed code with one click
 
-### Scoring Algorithm
+---
+
+## 🌟 Supported Fix Types
+
+- **Color Contrast**: WCAG-compliant color combinations
+- **Missing Alt Text**: Descriptive image alt attributes
+- **Form Labels**: Proper label elements with meaningful text
+- **Generic WCAG Violations**: Various other accessibility issues
+
+---
+
+## 🔑 Prerequisites
+
+- Node.js (v14 or higher)
+- npm or yarn
+- Google Gemini API Key (free) - Get from [Google AI Studio](https://aistudio.google.com/app/apikey)
+
+---
+
+## ⚙️ Installation
+
+```bash
+# Clone repository
+git clone <your-repo-url>
+cd accessibility-checker
+
+# Install dependencies
+npm install
+
+# Configure API key
+cp .env.example .env
+# Edit .env and add: GEMINI_API_KEY=your_key_here
+
+# Start server
+npm start
+```
+
+---
+
+## 📊 Scoring Algorithm
 
 ```
 Base Score = 100
 
 Deductions:
-- Critical violation: -10 points per affected element
-- Serious violation: -5 points per affected element
-- Moderate violation: -2 points per affected element
-- Minor violation: -1 point per affected element
+- Critical: -10 points per element
+- Serious: -5 points per element
+- Moderate: -2 points per element
+- Minor: -1 point per element
 
-Alternative calculation (averaged):
-Percentage Score = (Tests Passed / Total Tests) × 100
-
-Final Score = Average of both methods (0-100 range)
+Final Score = Average of deduction method & percentage passed
 ```
-
-### PDF Report Structure
-
-**Page 1 - Executive Summary:**
-- URL scanned and date
-- Overall score with color coding
-- Issue count by severity
-- WCAG compliance breakdown
-
-**Page 2+ - Detailed Violations:**
-- Each violation with:
-  - Title and description
-  - Severity level
-  - WCAG reference
-  - Number of affected elements
-  - Impact explanation
-
-**Final Page - Recommendations:**
-- Priority actions
-- Best practices
-- Resources and links
-
-## Testing
-
-### Test URLs
-
-Use these URLs to test the scanner:
-
-**Good Accessibility:**
-- https://www.a11yproject.com/
-- https://www.w3.org/WAI/
-
-**Medium Accessibility:**
-- https://example.com
-
-**Poor Accessibility (Demo):**
-- https://www.w3.org/WAI/demos/bad/
-
-### Running Tests
-
-1. Start the server: `npm start`
-2. Open browser to `http://localhost:3000`
-3. Test with each URL above
-4. Verify:
-   - Scan completes successfully
-   - Score displays correctly
-   - Violations are listed
-   - PDF downloads properly
-
-## Troubleshooting
-
-### Puppeteer Installation Issues
-
-If Puppeteer fails to install:
-```bash
-npm install puppeteer --unsafe-perm=true
-```
-
-Or install Chromium separately:
-```bash
-npx puppeteer browsers install chrome
-```
-
-### Port Already in Use
-
-If port 3000 is occupied, change it in `server.js`:
-```javascript
-const PORT = 3001; // Change to any available port
-```
-
-### PDF Generation Fails
-
-Ensure the `reports/` directory exists:
-```bash
-mkdir reports
-```
-
-### CORS Errors
-
-CORS is already enabled, but if you encounter issues, check that the frontend is accessing the correct API URL in `public/script.js`.
-
-## Browser Compatibility
-
-The web interface works on:
-- Chrome/Edge (latest)
-- Firefox (latest)
-- Safari (latest)
-
-## Limitations
-
-- **Client-side Rendering**: Some JavaScript-heavy sites may not fully load
-- **Authentication**: Cannot scan pages behind login
-- **CAPTCHA**: Sites with CAPTCHA will fail
-- **Timeouts**: Very slow sites may timeout (30s limit)
-- **Automated Tests Only**: Manual accessibility testing still recommended
-
-## Future Enhancements
-
-- [ ] Batch URL scanning
-- [ ] Historical tracking and trends
-- [ ] User authentication and saved scans
-- [ ] Scheduled automated scans
-- [ ] Email notifications
-- [ ] CI/CD integration
-- [ ] Site-wide crawling
-- [ ] Custom scoring weights
-- [ ] Multiple report formats (JSON, CSV, HTML)
-- [ ] Visual highlighting of issues
-
-## Resources
-
-- [WCAG 2.1 Guidelines](https://www.w3.org/WAI/WCAG21/quickref/)
-- [axe-core Documentation](https://github.com/dequelabs/axe-core)
-- [WebAIM](https://webaim.org/)
-- [A11y Project](https://www.a11yproject.com/)
-- [Web Accessibility Introduction](https://www.w3.org/WAI/fundamentals/accessibility-intro/)
-
-## License
-
-ISC
-
-## Contributing
-
-Contributions welcome! Please open an issue or submit a pull request.
 
 ---
 
-**Built for making the web more accessible to everyone.**
+## 🌐 Browser Compatibility
+
+- Chrome/Edge (latest) ✅
+- Firefox (latest) ✅
+- Safari (latest) ✅
+
+---
+
+## ⚠️ Known Limitations
+
+- Cannot scan pages behind authentication
+- JavaScript-heavy sites may not fully render
+- Sites with CAPTCHA will fail
+- Timeout after 30 seconds for slow sites
+
+---
+
+
+## 🔗 Resources
+
+- [WCAG 2.1 Guidelines](https://www.w3.org/WAI/WCAG21/quickref/)
+- [axe-core Documentation](https://github.com/dequelabs/axe-core)
+- [Google Gemini AI](https://ai.google.dev/)
+- [WebAIM](https://webaim.org/)
+
+---
+
+**Built with ❤️ for making the web accessible to everyone**

@@ -3,6 +3,7 @@ const cors = require('cors');
 const path = require('path');
 const { scanURL, isValidURL } = require('./utils/scanner');
 const { generateReport } = require('./utils/reportGenerator');
+const { generateFixSuggestion } = require('./utils/geminiAI');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -136,6 +137,41 @@ app.get('/api/report/:scanId', async (req, res) => {
   }
 });
 
+// POST /api/suggest-fix - Generate AI-powered fix suggestion for a violation
+app.post('/api/suggest-fix', async (req, res) => {
+  try {
+    const { violation } = req.body;
+
+    // Validate violation data
+    if (!violation || !violation.id) {
+      return res.status(400).json({
+        success: false,
+        error: 'Violation data is required'
+      });
+    }
+
+    console.log(`Generating AI fix for violation: ${violation.id}`);
+
+    // Generate AI suggestion
+    const suggestion = await generateFixSuggestion(violation);
+
+    console.log(`AI suggestion generated (AI: ${suggestion.aiGenerated}, Cache: ${suggestion.fromCache || false})`);
+
+    // Return suggestion
+    res.json({
+      success: true,
+      data: suggestion
+    });
+
+  } catch (error) {
+    console.error('AI suggestion error:', error.message);
+    res.status(500).json({
+      success: false,
+      error: error.message || 'Failed to generate suggestion. Please try again.'
+    });
+  }
+});
+
 // GET / - Serve frontend
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
@@ -161,6 +197,7 @@ app.listen(PORT, () => {
 ║                                                       ║
 ║    API Endpoints:                                     ║
 ║    • POST /api/scan - Scan a URL                      ║
+║    • POST /api/suggest-fix - Get AI fix (NEW)         ║
 ║    • GET  /api/report/:scanId - Download report       ║
 ║    • GET  /api/health - Health check                  ║
 ║                                                       ║

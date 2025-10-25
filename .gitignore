@@ -1,5 +1,5 @@
 node_modules/
-reports/
+reports/*.pdf
 .DS_Store
 .env
 *.log

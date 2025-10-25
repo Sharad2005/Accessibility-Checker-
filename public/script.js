@@ -160,12 +160,22 @@ function createViolationElement(violation, number) {
       <div><strong>Affected elements:</strong> ${affectedCount}</div>
       <div><strong>Impact:</strong> ${escapeHtml(impact)}</div>
     </div>
+    <div class="violation-actions">
+      <button class="btn-ai-suggest" data-violation-index="${number - 1}">
+        <span class="ai-icon">✨</span> Get AI Fix Suggestion
+      </button>
+    </div>
+    <div id="ai-suggestion-${number - 1}" class="ai-suggestion-container hidden"></div>
     <details class="violation-details">
       <summary>View affected elements</summary>
       <pre>${JSON.stringify(violation.nodes.slice(0, 3), null, 2)}</pre>
       ${violation.nodes.length > 3 ? `<p><em>...and ${violation.nodes.length - 3} more</em></p>` : ''}
     </details>
   `;
+
+  // Add event listener for AI suggestion button
+  const aiButton = div.querySelector('.btn-ai-suggest');
+  aiButton.addEventListener('click', () => handleAISuggestion(violation, number - 1));
 
   return div;
 }
@@ -175,6 +185,138 @@ function escapeHtml(text) {
   const div = document.createElement('div');
   div.textContent = text;
   return div.innerHTML;
+}
+
+// Handle AI suggestion request
+async function handleAISuggestion(violation, index) {
+  const button = document.querySelector(`[data-violation-index="${index}"]`);
+  const container = document.getElementById(`ai-suggestion-${index}`);
+
+  // Update button state
+  button.disabled = true;
+  button.innerHTML = '<span class="spinner-small"></span> Generating...';
+
+  try {
+    // Call AI suggestion API with timeout
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 20000); // 20 second timeout
+
+    const response = await fetch(`${API_URL}/suggest-fix`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ violation }),
+      signal: controller.signal
+    });
+
+    clearTimeout(timeoutId);
+
+    const result = await response.json();
+
+    if (result.success) {
+      // Display suggestion
+      displayAISuggestion(container, result.data, index);
+
+      // Update button
+      button.innerHTML = '<span class="ai-icon">✅</span> Suggestion Generated';
+      button.classList.add('success');
+    } else {
+      throw new Error(result.error || 'Failed to generate suggestion');
+    }
+
+  } catch (error) {
+    console.error('AI suggestion error:', error);
+
+    // Show error message
+    container.innerHTML = `
+      <div class="ai-suggestion error">
+        <p class="error-text">⚠️ ${error.name === 'AbortError' ? 'Request timed out. Please try again.' : error.message}</p>
+        <button class="btn-retry" onclick="this.parentElement.parentElement.previousElementSibling.querySelector('.btn-ai-suggest').click()">
+          Retry
+        </button>
+      </div>
+    `;
+    container.classList.remove('hidden');
+
+    // Reset button
+    button.disabled = false;
+    button.innerHTML = '<span class="ai-icon">✨</span> Get AI Fix Suggestion';
+  }
+}
+
+// Display AI suggestion
+function displayAISuggestion(container, suggestion, index) {
+  const { before, after, explanation, aiGenerated, fromCache } = suggestion;
+
+  container.innerHTML = `
+    <div class="ai-suggestion">
+      <div class="ai-header">
+        <h4>
+          <span class="ai-icon">✨</span>
+          ${aiGenerated ? 'AI-Powered' : 'Template-Based'} Fix Suggestion
+          ${fromCache ? '<span class="cache-badge">Cached</span>' : ''}
+        </h4>
+      </div>
+
+      <div class="ai-explanation">
+        <p>${escapeHtml(explanation)}</p>
+      </div>
+
+      <div class="code-comparison">
+        <div class="code-block before">
+          <div class="code-header">
+            <span>Before</span>
+            <button class="btn-copy" onclick="copyToClipboard(this, \`${escapeForJs(before)}\`)">
+              Copy
+            </button>
+          </div>
+          <pre><code>${escapeHtml(before)}</code></pre>
+        </div>
+
+        <div class="code-arrow">→</div>
+
+        <div class="code-block after">
+          <div class="code-header">
+            <span>After (Fixed)</span>
+            <button class="btn-copy" onclick="copyToClipboard(this, \`${escapeForJs(after)}\`)">
+              Copy
+            </button>
+          </div>
+          <pre><code>${escapeHtml(after)}</code></pre>
+        </div>
+      </div>
+    </div>
+  `;
+
+  container.classList.remove('hidden');
+}
+
+// Copy text to clipboard
+function copyToClipboard(button, text) {
+  navigator.clipboard.writeText(text).then(() => {
+    const originalText = button.textContent;
+    button.textContent = 'Copied!';
+    button.classList.add('copied');
+
+    setTimeout(() => {
+      button.textContent = originalText;
+      button.classList.remove('copied');
+    }, 2000);
+  }).catch(err => {
+    console.error('Copy failed:', err);
+    showError('Failed to copy to clipboard');
+  });
+}
+
+// Escape text for JavaScript string
+function escapeForJs(text) {
+  return text
+    .replace(/\\/g, '\\\\')
+    .replace(/`/g, '\\`')
+    .replace(/\$/g, '\\$')
+    .replace(/\n/g, '\\n')
+    .replace(/\r/g, '\\r');
 }
 
 // Handle PDF download

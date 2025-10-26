@@ -1,4 +1,4 @@
-# Accessibility Checker 🌐
+# Accessibility Checker
 
 **AI-Powered Web Accessibility Scanner with Automated Code Fixes**
 
@@ -6,7 +6,7 @@ Scan any website for WCAG 2.1 compliance and get **instant AI-generated code fix
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ```bash
 # 1. Install dependencies
@@ -24,21 +24,21 @@ npm start
 
 ---
 
-## ✨ Key Features
+## Key Features
 
-### 🤖 AI-Powered Fix Suggestions
+### AI-Powered Fix Suggestions
 - **Instant Code Fixes**: Google Gemini AI generates ready-to-use HTML/CSS fixes
 - **Before/After Comparison**: Side-by-side code view shows exactly what to change
 - **Copy to Clipboard**: One-click copying for immediate implementation
 - **Smart Explanations**: Understand why each fix matters for accessibility
 
-### 📊 Comprehensive Analysis
+### Comprehensive Analysis
 - **WCAG 2.1 Compliance**: Automated checks against Level A & AA standards
 - **Accessibility Scoring**: 0-100 score based on violation severity
 - **Detailed Breakdown**: Critical, Serious, Moderate, and Minor issue categorization
 - **PDF Reports**: Professional downloadable compliance reports
 
-### 🎯 Developer-Friendly
+### Developer-Friendly
 - **Real-Time Analysis**: Powered by axe-core accessibility testing engine
 - **URL-Based Scanning**: Simply enter any website URL to analyze
 - **Smart Caching**: 1-hour cache for faster repeated suggestions
@@ -46,7 +46,7 @@ npm start
 
 ---
 
-## 🏗️ Tech Stack
+## Tech Stack
 
 | Component | Technology |
 |-----------|-----------|
@@ -59,14 +59,14 @@ npm start
 
 ---
 
-## 💡 What Makes This Different?
+## What Makes This Different?
 
 Unlike traditional accessibility checkers that only identify problems, our tool:
 
-✅ **Generates Real Code Fixes** - Not just descriptions, but actual working HTML/CSS
-✅ **Explains the Impact** - Understand how each issue affects users with disabilities
-✅ **Teaches Best Practices** - Learn correct implementations while fixing
-✅ **Saves Development Time** - Copy-paste ready code instead of researching solutions
+- **Generates Real Code Fixes** - Not just descriptions, but actual working HTML/CSS
+- **Explains the Impact** - Understand how each issue affects users with disabilities
+- **Teaches Best Practices** - Learn correct implementations while fixing
+- **Saves Development Time** - Copy-paste ready code instead of researching solutions
 
 ### Example AI Suggestion
 
@@ -85,7 +85,7 @@ Unlike traditional accessibility checkers that only identify problems, our tool:
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 accessibility-checker/
@@ -103,7 +103,7 @@ accessibility-checker/
 
 ---
 
-## 🔧 API Endpoints
+## API Endpoints
 
 ### `POST /api/scan`
 Scan a URL for accessibility issues and get detailed analysis.
@@ -119,7 +119,7 @@ Health check endpoint.
 
 ---
 
-## 🎨 How It Works
+## How It Works
 
 ### Scanning Process
 1. User enters website URL
@@ -137,7 +137,7 @@ Health check endpoint.
 
 ---
 
-## 🌟 Supported Fix Types
+## Supported Fix Types
 
 - **Color Contrast**: WCAG-compliant color combinations
 - **Missing Alt Text**: Descriptive image alt attributes
@@ -146,7 +146,7 @@ Health check endpoint.
 
 ---
 
-## 🔑 Prerequisites
+## Prerequisites
 
 - Node.js (v14 or higher)
 - npm or yarn
@@ -154,7 +154,7 @@ Health check endpoint.
 
 ---
 
-## ⚙️ Installation
+## Installation
 
 ```bash
 # Clone repository
@@ -174,7 +174,7 @@ npm start
 
 ---
 
-## 📊 Scoring Algorithm
+## Scoring Algorithm
 
 ```
 Base Score = 100
@@ -190,15 +190,31 @@ Final Score = Average of deduction method & percentage passed
 
 ---
 
-## 🌐 Browser Compatibility
+## Testing
 
-- Chrome/Edge (latest) ✅
-- Firefox (latest) ✅
-- Safari (latest) ✅
+**Test with these URLs:**
+
+- Good: https://www.a11yproject.com/
+- Medium: https://example.com
+- Poor: https://www.facebook.com (color contrast issues)
+
+**To test AI suggestions:**
+1. Scan https://www.facebook.com
+2. Click "Get AI Suggestion" on any violation
+3. View AI-generated fix with explanation
+4. Copy fixed code to clipboard
 
 ---
 
-## ⚠️ Known Limitations
+## Browser Compatibility
+
+- Chrome/Edge (latest)
+- Firefox (latest)
+- Safari (latest)
+
+---
+
+## Known Limitations
 
 - Cannot scan pages behind authentication
 - JavaScript-heavy sites may not fully render
@@ -207,8 +223,7 @@ Final Score = Average of deduction method & percentage passed
 
 ---
 
-
-## 🔗 Resources
+## Resources
 
 - [WCAG 2.1 Guidelines](https://www.w3.org/WAI/WCAG21/quickref/)
 - [axe-core Documentation](https://github.com/dequelabs/axe-core)
@@ -217,4 +232,4 @@ Final Score = Average of deduction method & percentage passed
 
 ---
 
-**Built with ❤️ for making the web accessible to everyone**
+**Built for making the web accessible to everyone**
